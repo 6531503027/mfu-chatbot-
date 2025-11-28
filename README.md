@@ -79,37 +79,139 @@ The application will be available at `http://localhost:3000`.
 
 ## 📖 Usage Guide
 
-### 💬 Chat Interface
-- **Ask Questions**: Type your query about university regulations, courses, or student life.
-- **Suggestions**: Use the "Next Topic" cards to explore related information.
-- **Feedback**: Rate answers to help improve the system.
+### 💬 Student Chat Interface
+
+**Access:** [https://mfu-chatbot.vercel.app/](https://mfu-chatbot.vercel.app/)
+
+The chatbot provides intelligent answers about university information across three domains:
+
+1. **Academic Information** 📚
+   - Course details and curricula
+   - Registration procedures
+   - Academic calendar
+   - Grade inquiries
+
+2. **University Regulations** 📋
+   - Student conduct rules
+   - Academic policies
+   - Examination regulations
+   - Graduation requirements
+
+3. **Student Life** 🎓
+   - Campus facilities
+   - Dormitory information
+   - Student activities
+   - Campus services
+
+**How to Use:**
+
+1. **Ask Questions:**
+   - Type your question in Thai or English
+   - Press Enter or click the send button
+   - The bot will analyze and route to the appropriate specialist agent
+
+2. **Explore Related Topics:**
+   - After receiving an answer, look for "คำถามที่เกี่ยวข้อง" (Related Topics) cards
+   - Click any card to automatically ask that follow-up question
+
+3. **Provide Feedback:**
+   - Rate answers using the 👍 (Helpful) or 👎 (Not Helpful) buttons
+   - Optionally add comments to help improve the system
+
+**Example Questions:**
+- "ลงทะเบียนเรียนเมื่อไหร่?"
+- "วิธีการรับทุนการศึกษา"
+- "หอพักมีห้องว่างไหม"
+- "เกรดเฉลี่ยต่ำกว่า 2.00 ทำอย่างไร"
+
+---
 
 ### 🛠️ Admin Dashboard
-Access the dashboard at `http://localhost:3000/admin`.
 
-#### 1. Authentication
-- Enter your **Admin Token** (configured in backend `.env`) in the "Settings" tab to unlock admin features.
+**Access:** [https://mfu-chatbot.vercel.app/admin](https://mfu-chatbot.vercel.app/admin)
 
-#### 2. Managing Documents
-Go to the **"Upload" (เพิ่มเนื้อหา)** tab to add knowledge:
+The admin dashboard provides complete control over the knowledge base and system monitoring.
 
-*   **Text Documents**:
-    - Fill in the Title and Content fields.
-    - Click "Create New" to save.
-    - Use the "Edit" button in the list to modify existing docs.
+#### 1️⃣ First Time Setup
 
-*   **PDF Documents (New!)**:
-    - **Drag & Drop**: Simply drag a PDF file into the drop zone.
-    - **Upload**: Click the upload button to process the file. The system will automatically chunk and index the content.
+1. **Navigate to Settings Tab (⚙️ ตั้งค่า)**
+2. **Enter Admin Token:**
+   - Use the token configured in your backend `.env` file
+   - Default: `very-secret-admin-key` (change this in production!)
+3. **Click "Save Token"**
+4. Dashboard features will unlock
 
-#### 3. Document Preview (New!)
-In the **"Documents" (เอกสารทั้งหมด)** tab:
-- Click the **"View" (👁️ ดู)** button on any document.
-- A **Preview Modal** will appear, showing the full content and metadata immediately.
-- You can switch to **Edit Mode** directly from the preview.
+#### 2️⃣ Managing Documents (📄 เอกสารทั้งหมด)
 
-#### 4. Statistics
-- View real-time stats on top questions, user intent distribution, and feedback scores.
+**View All Documents:**
+- See complete list of knowledge base documents
+- Filter by type: Text documents vs PDF documents
+- Search by title using the search bar
+
+**Document Actions:**
+- **👁️ View (ดู)**: Preview document content in a modal
+- **✏️ Edit (แก้ไข)**: Modify existing document
+- **🗑️ Delete (ลบ)**: Remove document from knowledge base
+
+#### 3️⃣ Adding New Content (➕ เพิ่มเนื้อหา)
+
+**Method 1: Text Content**
+
+1. **Go to "เพิ่มเนื้อหา" tab**
+2. **Fill in the form:**
+   - **Title (ชื่อเรื่อง)**: Document title
+   - **Content (เนื้อหา)**: Full text content (supports long text)
+   - **Updated By (ผู้แก้ไข)**: Your name/identifier
+3. **Click "✨ Create New Document"**
+4. Document is automatically indexed for search
+
+**Method 2: PDF Upload**
+
+1. **Go to "เพิ่มเนื้อหา" tab → "📄 Upload PDF" section**
+2. **Upload PDF:**
+   - **Drag & Drop**: Simply drag PDF file into the drop zone
+   - **Or Click**: Click "Choose File" to browse
+3. **Click "📤 Upload PDF"**
+4. System automatically:
+   - Extracts text from PDF
+   - Creates document entry
+   - Indexes content for RAG search
+
+**Supported:**
+- PDF files up to reasonable size
+- Multi-page PDFs
+- Thai and English text
+
+#### 4️⃣ Viewing Feedback (� Feedback)
+
+**Monitor User Satisfaction:**
+- See all user feedback submissions
+- View which answers were helpful/not helpful
+- Read user comments for improvement suggestions
+
+**Feedback Details:**
+- Original question
+- Bot's answer
+- User rating (👍/👎)
+- Optional comment
+- Timestamp
+
+#### 5️⃣ Statistics Dashboard (📊 สถิติ)
+
+**Key Metrics:**
+- **Total Questions**: Number of queries handled
+- **Total Documents**: Knowledge base size
+- **Feedback Rate**: User satisfaction percentage
+
+**Top Questions:**
+- Most frequently asked questions
+- Helps identify popular topics
+- Use to add more detailed content
+
+**Intent Distribution:**
+- Breakdown by category (Academic/Regulation/Student Life)
+- Understand user needs
+- Optimize agent performance
 
 ## 🚀 Deployment Guide
 
