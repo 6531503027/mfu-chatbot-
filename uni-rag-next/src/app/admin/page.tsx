@@ -1,3 +1,4 @@
+// Force rebuild: 2025-11-28 23:39 - Fixed ngrok header issue
 "use client";
 
 import { useEffect, useState } from "react";
