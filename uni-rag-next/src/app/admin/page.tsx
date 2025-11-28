@@ -151,7 +151,10 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(`${API_BASE}/admin/documents/list`, {
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
       });
 
       if (!res.ok) {
@@ -175,7 +178,10 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(`${API_BASE}/admin/feedback?limit=100`, {
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
       });
 
       if (res.ok) {
@@ -197,13 +203,22 @@ export default function AdminPage() {
     try {
       const [summaryRes, questionsRes, intentsRes] = await Promise.all([
         fetch(`${API_BASE}/admin/stats/summary`, {
-          headers: { "X-API-Key": adminToken },
+          headers: {
+            "X-API-Key": adminToken,
+            "ngrok-skip-browser-warning": "true",
+          },
         }),
         fetch(`${API_BASE}/admin/stats/top-questions?limit=10`, {
-          headers: { "X-API-Key": adminToken },
+          headers: {
+            "X-API-Key": adminToken,
+            "ngrok-skip-browser-warning": "true",
+          },
         }),
         fetch(`${API_BASE}/admin/stats/intents`, {
-          headers: { "X-API-Key": adminToken },
+          headers: {
+            "X-API-Key": adminToken,
+            "ngrok-skip-browser-warning": "true",
+          },
         }),
       ]);
 
@@ -270,6 +285,7 @@ export default function AdminPage() {
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({
           title: docTitle.trim(),
@@ -314,7 +330,10 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(`${API_BASE}/admin/documents/${id}`, {
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
       });
 
       if (!res.ok) {
@@ -343,7 +362,10 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(`${API_BASE}/admin/documents/${id}`, {
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
       });
 
       if (!res.ok) {
@@ -378,7 +400,10 @@ export default function AdminPage() {
     try {
       const res = await fetch(`${API_BASE}/admin/documents/${deletingId}`, {
         method: "DELETE",
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
       });
 
       if (!res.ok) {
@@ -417,7 +442,10 @@ export default function AdminPage() {
     try {
       const res = await fetch(`${API_BASE}/admin/upload_pdf`, {
         method: "POST",
-        headers: { "X-API-Key": adminToken },
+        headers: {
+          "X-API-Key": adminToken,
+          "ngrok-skip-browser-warning": "true",
+        },
         body: formData,
       });
 
