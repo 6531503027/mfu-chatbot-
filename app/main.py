@@ -63,11 +63,9 @@ app = FastAPI(title="University RAG Chatbot (Multi-Agent + Gemini)")
 
 # CORS
 # CORS
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",")
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=".*",  # ✅ Allow all origins (regex) to support credentials
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
