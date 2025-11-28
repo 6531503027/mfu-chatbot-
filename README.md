@@ -14,12 +14,52 @@ A comprehensive AI-powered assistant for university students, featuring a RAG-ba
 - **Backend**: Running on AWS EC2 (Ubuntu, Docker)
 - **Connectivity**: Secured via ngrok HTTPS tunnel
 
-## 🏗 System Architecture
+## ✨ Key Features
+
+### Student-Facing Chat
+- 🤖 **Multi-Agent System**: Automatically routes questions to specialized agents (Academic, Regulations, Student Life)
+- 💬 **Natural Conversations**: Supports both Thai and English queries
+- 🎯 **Smart Suggestions**: AI-powered related topic recommendations
+- 👍 **Feedback System**: Users can rate responses and provide comments
+- 📱 **Responsive Design**: Works seamlessly on mobile and desktop
+
+### Admin Dashboard
+- 📄 **Document Management**: Create, edit, and delete knowledge base content
+- 📤 **PDF Upload**: Automatic text extraction and indexing from PDF files
+- 📊 **Analytics**: View statistics on popular questions and user intents
+- 💬 **Feedback Review**: Monitor user satisfaction and comments
+- 🔐 **Secure Access**: Token-based authentication
+
+### Technical Features
+- 🔍 **RAG (Retrieval-Augmented Generation)**: ChromaDB vector store for semantic search
+- � **Modern UI/UX**: Clean, intuitive interface with smooth animations
+- 🚀 **Fast Response**: Optimized query processing and caching
+- 🔒 **HTTPS Secure**: End-to-end encrypted communications
+- 📝 **Automatic FAQ**: Frequently asked questions auto-generated from usage patterns
+
+## �🏗 System Architecture
 
 The system consists of two main components:
 
 1.  **Backend (`/app`)**: Built with **FastAPI**, **LangChain**, and **ChromaDB**. It handles the RAG logic, multi-agent routing (Academic, Regulation, Student Life), and database operations.
 2.  **Frontend (`/uni-rag-next`)**: Built with **Next.js 15**. It provides a responsive chat interface and a comprehensive admin dashboard.
+
+## 🛠 Tech Stack
+
+### Backend
+- **Framework**: FastAPI
+- **LLM Integration**: Google Gemini AI (gemini-2.0-flash-exp)
+- **Vector Database**: ChromaDB with HuggingFace embeddings
+- **Database**: PostgreSQL + SQLAlchemy ORM
+- **PDF Processing**: PyPDF2
+- **Deployment**: Docker, Docker Compose
+
+### Frontend
+- **Framework**: Next.js 15 (React 19)
+- **Language**: TypeScript
+- **Styling**: Vanilla CSS with modern design patterns
+- **Deployment**: Vercel
+- **State Management**: React Hooks
 
 ## 🚀 Getting Started
 
