@@ -180,7 +180,10 @@ export default function StudentPage() {
   async function callApi<T>(path: string, body: unknown): Promise<T> {
     const res = await fetch(`${API_BASE}${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
       body: JSON.stringify(body),
     });
     if (!res.ok) {
@@ -234,7 +237,10 @@ export default function StudentPage() {
     try {
       await fetch(`${API_BASE}/feedback`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
         body: JSON.stringify({ question, answer, is_helpful: isHelpful, comment }),
       });
       // Silently succeed - no need to show confirmation
