@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Environments
+.env
+.env.local
+
+# Database
+pgdata/
+*.db
+*.sqlite3
+
+# ChromaDB
+chroma_data/
+
+# Hugging Face cache
+hf_cache/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+
+# Jupyter
+.ipynb_checkpoints/

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: mfu-db
+    environment:
+      POSTGRES_DB: mfu_unibot
+      POSTGRES_USER: mfu_user
+      POSTGRES_PASSWORD: mfu_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      # เก็บข้อมูล DB ให้อยู่รอดข้ามการ restart
+      - ./pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mfu_user -d mfu_unibot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mfu-backend
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      uvicorn app.main:app
+      --host 0.0.0.0
+      --port 8000
+    volumes:
+      # เก็บ ChromaDB ให้ถาวร (CHROMA_DIR=data/chroma ภายใน /app)
+      - ./chroma_data:/app/data/chroma
+      # cache ของ HuggingFace / Torch ไม่ต้องโหลด model ใหม่ทุกครั้ง
+      - ./hf_cache:/root/.cache/huggingface
+    restart: unless-stopped
+
+  adminer:
+    image: adminer
+    container_name: mfu-adminer
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
