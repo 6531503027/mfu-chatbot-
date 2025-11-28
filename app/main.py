@@ -315,24 +315,38 @@ async def upload_pdf(
       - create Document + revision
       - upsert vector
     """
+    print(f"[PDF_UPLOAD] Starting upload: {file.filename}", flush=True)
+    
     if not file.filename or not file.filename.lower().endswith(".pdf"):
+        print(f"[PDF_UPLOAD] Invalid file type: {file.filename}", flush=True)
         raise HTTPException(status_code=400, detail="File must be PDF")
 
-    pdf_bytes = await file.read()
+    try:
+        pdf_bytes = await file.read()
+        print(f"[PDF_UPLOAD] Read {len(pdf_bytes)} bytes", flush=True)
+    except Exception as e:
+        print(f"[PDF_UPLOAD] Failed to read file: {e}", flush=True)
+        raise HTTPException(status_code=400, detail=f"Failed to read file: {str(e)}")
+    
     if not pdf_bytes:
+        print("[PDF_UPLOAD] Empty file", flush=True)
         raise HTTPException(status_code=400, detail="Empty file")
 
     try:
+        print("[PDF_UPLOAD] Extracting text from PDF...", flush=True)
         text, page_count = extract_text_from_pdf_bytes(
             pdf_bytes, max_chars=MAX_PDF_CHARS
         )
+        print(f"[PDF_UPLOAD] Extracted {len(text)} chars from {page_count} pages", flush=True)
     except Exception as e:
+        print(f"[PDF_UPLOAD] PDF extraction failed: {e}", flush=True)
         raise HTTPException(
             status_code=400,
-            detail=f"Cannot read PDF: {e}",
+            detail=f"Cannot read PDF: {str(e)}",
         )
 
     if not text.strip():
+        print("[PDF_UPLOAD] No text found in PDF", flush=True)
         raise HTTPException(
             status_code=400,
             detail="No extractable text found in PDF",
@@ -341,36 +355,52 @@ async def upload_pdf(
     base_title = os.path.splitext(file.filename or "Uploaded PDF")[0]
     title = f"[PDF] {base_title}"
 
-    db_doc = Document(title=title, current_content=text)
-    db.add(db_doc)
-    db.commit()
-    db.refresh(db_doc)
+    try:
+        print(f"[PDF_UPLOAD] Creating document: {title}", flush=True)
+        db_doc = Document(title=title, current_content=text)
+        db.add(db_doc)
+        db.commit()
+        db.refresh(db_doc)
+        print(f"[PDF_UPLOAD] Document created with ID: {db_doc.id}", flush=True)
 
-    rev = DocumentRevision(
-        document_id=db_doc.id,
-        content=text,
-        updated_by="admin_pdf_upload",
-    )
-    db.add(rev)
-    db.commit()
+        rev = DocumentRevision(
+            document_id=db_doc.id,
+            content=text,
+            updated_by="admin_pdf_upload",
+        )
+        db.add(rev)
+        db.commit()
+        print(f"[PDF_UPLOAD] Revision created",flush=True)
 
-    add_or_update_doc_to_vector(
-        doc_id=str(db_doc.id),
-        content=text,
-        metadata={
+        print(f"[PDF_UPLOAD] Adding to vector store...", flush=True)
+        add_or_update_doc_to_vector(
+            doc_id=str(db_doc.id),
+            content=text,
+            metadata={
+                "title": db_doc.title,
+                "source": "pdf",
+                "filename": file.filename,
+            },
+        )
+        print(f"[PDF_UPLOAD] Vector store updated", flush=True)
+
+        result = {
+            "id": db_doc.id,
             "title": db_doc.title,
-            "source": "pdf",
             "filename": file.filename,
-        },
-    )
-
-    return {
-        "id": db_doc.id,
-        "title": db_doc.title,
-        "filename": file.filename,
-        "pages": page_count,
-        "chars": len(text),
-    }
+            "pages": page_count,
+            "chars": len(text),
+        }
+        print(f"[PDF_UPLOAD] Success: {result}", flush=True)
+        return result
+        
+    except Exception as e:
+        print(f"[PDF_UPLOAD] Database/Vector error: {e}", flush=True)
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+           detail=f"Failed to save document: {str(e)}",
+        )
 
 
 # ============================================================
