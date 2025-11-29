@@ -411,11 +411,18 @@ async def upload_pdf(
 def list_documents(
     db: Session = Depends(get_db),
     _admin_ok: bool = Depends(verify_admin),
+    limit: int = 1000,
 ):
+    """
+    List all documents (admin only)
+    
+    Args:
+        limit: Maximum number of documents to return (default: 1000)
+    """
     docs = (
         db.query(Document)
         .order_by(Document.id.desc())
-        .limit(50)
+        .limit(limit)
         .all()
     )
     return docs

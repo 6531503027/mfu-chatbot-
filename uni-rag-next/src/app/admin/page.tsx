@@ -151,7 +151,7 @@ export default function AdminPage() {
     setStatus(null);
 
     try {
-      const res = await fetch(`${API_BASE}/admin/documents/list`, {
+      const res = await fetch(`${API_BASE}/admin/documents/list?limit=1000`, {
         headers: {
           "X-API-Key": adminToken,
           "ngrok-skip-browser-warning": "true",
